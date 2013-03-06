@@ -15,6 +15,10 @@ class User
     'You'
   end
 
+  def user?
+    true
+  end
+
   def choose_coordinates
     @coordinates = {}
     enter_letter

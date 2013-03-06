@@ -6,29 +6,7 @@ module GameView
     move_to_home
 
     boards.each do |board|
-      puts ASTERIX_DIVIDER
-      puts "      #{board.owner.as_possessive} board"
-      puts ASTERIX_DIVIDER
-      puts '  1 2 3 4 5 6 7 8 9 10'
-      board.playing_field.each do |k, v|
-        if board == boards[0]
-          puts v.join(' ')
-        else
-          hide_nums = []
-          v.each do |e|
-            if e.class == Fixnum
-              hide_nums << '.'
-            else
-              hide_nums << e
-            end
-          end
-          puts hide_nums.join(' ')
-        end
-      end
-      puts ''
-      puts "#{board.owner.as_possessive} remaining ships"
-      p board.playing_field_values.select { |v| v.is_a?(Integer) }.uniq.sort
-      puts ''
+      board.display_board
     end
   end
 
@@ -68,6 +46,32 @@ module UserView
 end
 
 module BoardView
+  def display_board
+    puts ASTERIX_DIVIDER
+    puts "      #{owner.as_possessive} board"
+    puts ASTERIX_DIVIDER
+    puts '  1 2 3 4 5 6 7 8 9 10'
+    playing_field.each do |k, v|
+      if self.owner.user?
+        puts v.join(' ')
+      else
+        hide_nums = []
+        v.each do |e|
+          if e.class == Fixnum
+            hide_nums << '.'
+          else
+            hide_nums << e
+          end
+        end
+        puts hide_nums.join(' ')
+      end
+    end
+    puts ''
+    puts "#{owner.as_possessive} remaining ships"
+    p playing_field_values.select { |v| v.is_a?(Integer) }.uniq.sort
+    puts ''
+  end
+
   def miss(coordinates, user)
     puts "#{user.as_subject} missed at #{coordinates[:row]}#{coordinates[:column]}..."
     sleep(1.0)

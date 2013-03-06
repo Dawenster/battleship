@@ -14,6 +14,10 @@ class AI
     'AI'
   end
 
+  def user?
+    false
+  end
+
   def choose_coordinates
     @coordinates = {}
     col = rand(COL_RANGE)
