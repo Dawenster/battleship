@@ -6,8 +6,6 @@ class TurnsController
   end
 
   def run
-    game.user_board.place_all_the_ships
-    game.ai_board.place_all_the_ships
     display_boards(boards)
     until all_ships_sunk?
       take_turns

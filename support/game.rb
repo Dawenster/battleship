@@ -7,6 +7,12 @@ class Game
     @user, @ai = options[:user], options[:ai]
     @user_attack_coords = {}
     @ai_attack_coords = {}
+    set_boards
+  end
+
+  def set_boards
+    user_board.place_all_the_ships
+    ai_board.place_all_the_ships
   end
 
   def players
