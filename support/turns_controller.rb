@@ -1,4 +1,5 @@
 class TurnsController
+  include TurnsView
   attr_reader :game
 
   def initialize(options = {})
@@ -39,8 +40,10 @@ class TurnsController
 
   def draw_attacks
     game.boards.each do |board|
+      player = board.owner
       coordinates = @attack_coords[board.owner]
-      other_board(board).draw_attack(coordinates, board.owner)
+      result = other_board(board).draw_attack(coordinates)
+      puts_hit_miss(coordinates, player, result)
     end
   end
 end

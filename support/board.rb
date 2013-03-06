@@ -63,14 +63,22 @@ class Board
     playing_field[coordinates[:row]][coordinates[:column] - 1] = value
   end
 
-  def draw_attack(coordinates, player)
+  def draw_attack(coordinates)
     if is_miss?(coordinates)
-      playing_field[coordinates[:row]][coordinates[:column]] = 'O'
-      miss(coordinates, player)
+      draw_miss(coordinates)
+      "missed"
     else
-      playing_field[coordinates[:row]][coordinates[:column]] = 'X'
-      hit(coordinates, player)
+      draw_hit(coordinates)
+      "hit"
     end
+  end
+
+  def draw_miss(coordinates)
+    playing_field[coordinates[:row]][coordinates[:column]] = 'O'
+  end
+
+  def draw_hit(coordinates)
+    playing_field[coordinates[:row]][coordinates[:column]] = 'X'
   end
 
   def is_miss?(coordinates)

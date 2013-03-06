@@ -72,17 +72,14 @@ module BoardView
     puts ''
   end
 
-  def miss(coordinates, user)
-    puts "#{user.as_subject} missed at #{coordinates[:row]}#{coordinates[:column]}..."
-    sleep(1.0)
-  end
-
-  def hit(coordinates, user)
-    puts "#{user.as_subject} hit at #{coordinates[:row]}#{coordinates[:column]}..."
-    sleep(1.0)
-  end
-
   def sunk_ship(ship)
     puts "#{owner.as_possessive} ship #{ship} has been sunk!"
+  end
+end
+
+module TurnsView
+  def puts_hit_miss(coordinates, user, word)
+    puts "#{user.as_subject} #{word} at #{coordinates[:row]}#{coordinates[:column]}..."
+    sleep(1.0)
   end
 end
