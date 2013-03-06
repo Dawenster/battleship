@@ -9,14 +9,6 @@ class Game
     @ai_attack_coords = {}
   end
 
-  def players
-    [user, ai]
-  end
-
-  def boards
-    [user_board, ai_board]
-  end
-
   def run
     user_board.place_all_the_ships
     ai_board.place_all_the_ships
@@ -27,6 +19,16 @@ class Game
       display_boards(boards)
       check_sunk_ships?
     end
+  end
+
+  private
+
+  def players
+    [user, ai]
+  end
+
+  def boards
+    [user_board, ai_board]
   end
 
   def take_turns

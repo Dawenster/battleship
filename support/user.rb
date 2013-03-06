@@ -23,6 +23,7 @@ class User
     end
     @coordinates = {row: letter_entry, column: number_entry}
     duplicate_check
+    @coordinates
   end
 
   def letter_legit?(letter_entry)
@@ -49,7 +50,6 @@ class User
       choose_coordinates
     else
       already_guessed << @coordinates
-      @coordinates
     end
   end
 

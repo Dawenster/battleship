@@ -29,7 +29,6 @@ module GameView
       puts board == boards[0] ? 'Your remaining ships' : "AI\'s remaining ships"
       p board.playing_field_values.select { |v| v.is_a?(Integer) }.uniq.sort
       puts ''
-      letter = 'A'
     end
   end
 

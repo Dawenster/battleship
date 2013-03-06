@@ -18,11 +18,9 @@ class Board
 
   def set_blank_board
     @playing_field = {}
-    letter = 'A'
     ROW_RANGE.to_a.each do |row_letter|
       @playing_field[row_letter] = Array.new(10) { "." }
-      @playing_field[row_letter].unshift(letter)
-      letter = letter.succ
+      @playing_field[row_letter].unshift(row_letter)
     end
     @playing_field
   end
@@ -65,13 +63,17 @@ class Board
   end
 
   def draw_attack(coordinates, boards, board)
-    if playing_field[coordinates[:row]][coordinates[:column]] == '.'
+    if is_miss?(coordinates)
       playing_field[coordinates[:row]][coordinates[:column]] = 'O'
       miss(boards, board, coordinates)
     else
       playing_field[coordinates[:row]][coordinates[:column]] = 'X'
       hit(boards, board, coordinates)
     end
+  end
+
+  def is_miss?(coordinates)
+    playing_field[coordinates[:row]][coordinates[:column]] == '.'
   end
 
   def random_starting_point
