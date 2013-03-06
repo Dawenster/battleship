@@ -10,6 +10,8 @@ class TurnsController
       ai: ai, 
       user: user
     )
+    @user_attack_coords = {}
+    @ai_attack_coords = {}
   end
 
   def run
@@ -24,5 +26,25 @@ class TurnsController
 
   def method_missing(*args)
     game.send(*args)
+  end
+
+  def take_turns
+    game.players.each do |player|
+      if player.user?
+        @user_attack_coords = player.choose_coordinates
+      else
+        @ai_attack_coords = player.choose_coordinates
+      end
+    end
+  end
+
+  def draw_attacks
+    game.boards.each do |board|
+      if board.owner.user?
+        game.boards.find {|b| b != board }.draw_attack(@user_attack_coords, user)
+      else
+        game.boards.find {|b| b != board }.draw_attack(@ai_attack_coords, ai)
+      end
+    end
   end
 end
