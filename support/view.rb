@@ -1,7 +1,7 @@
 ASTERIX_DIVIDER = '*' * 22
 
 module GameView
-  def display_boards(boards)
+  def display_boards
     clear_screen
     move_to_home
 

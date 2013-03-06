@@ -15,11 +15,11 @@ class TurnsController
   end
 
   def run
-    game.display_boards(boards)
+    game.display_boards
     until all_ships_sunk?
       take_turns
       draw_attacks
-      display_boards(boards)
+      game.display_boards
       check_sunk_ships?
     end
   end
