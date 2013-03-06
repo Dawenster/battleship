@@ -5,11 +5,12 @@ DIRECTIONS = [:row, :column]
 
 class Board
   include BoardView
-  attr_reader :playing_field, :ships_sunk
+  attr_reader :playing_field, :ships_sunk, :owner
 
-  def initialize
+  def initialize(options = {})
     set_blank_board
     @ships_sunk = []
+    @owner = options[:owner]
   end
 
   def playing_field_values
@@ -62,13 +63,13 @@ class Board
     playing_field[coordinates[:row]][coordinates[:column] - 1] = value
   end
 
-  def draw_attack(coordinates, boards, board)
+  def draw_attack(coordinates, player)
     if is_miss?(coordinates)
       playing_field[coordinates[:row]][coordinates[:column]] = 'O'
-      miss(boards, board, coordinates)
+      miss(coordinates, player)
     else
       playing_field[coordinates[:row]][coordinates[:column]] = 'X'
-      hit(boards, board, coordinates)
+      hit(coordinates, player)
     end
   end
 
@@ -88,7 +89,7 @@ class Board
     SHIPS.each do |ship|
       unless playing_field_values.include?(ship)
         ships_sunk << ship
-        sunk_ship(ship, current_player) if ships_sunk.count(ship) == 1
+        sunk_ship(ship) if ships_sunk.count(ship) == 1
       end
     end
   end

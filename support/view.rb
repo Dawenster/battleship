@@ -7,7 +7,7 @@ module GameView
 
     boards.each do |board|
       puts ASTERIX_DIVIDER
-      puts board == boards[0] ? '      Your board' : "      AI\'s board"
+      puts "      #{board.owner.as_possessive} board"
       puts ASTERIX_DIVIDER
       puts '  1 2 3 4 5 6 7 8 9 10'
       board.playing_field.each do |k, v|
@@ -26,7 +26,7 @@ module GameView
         end
       end
       puts ''
-      puts board == boards[0] ? 'Your remaining ships' : "AI\'s remaining ships"
+      puts "#{board.owner.as_possessive} remaining ships"
       p board.playing_field_values.select { |v| v.is_a?(Integer) }.uniq.sort
       puts ''
     end
@@ -63,28 +63,22 @@ module UserView
   end
 
   def game_over(boards, board)
-    winning_message = ''
-    board == boards[0] ? winning_message = 'AI wins!' : winning_message = 'You win!'
-    puts "Game over! #{winning_message}"
+    puts "Game over! #{board.owner_name_subject} win!"
   end
 end
 
 module BoardView
-  def miss(boards, board, coordinates)
-    pronoun = ''
-    boards[0] == board ? pronoun = 'You have' : pronoun = 'AI has'
-    puts "#{pronoun} missed at #{coordinates[:row]}#{coordinates[:column]}..."
+  def miss(coordinates, user)
+    puts "#{user.as_subject} missed at #{coordinates[:row]}#{coordinates[:column]}..."
     sleep(1.0)
   end
 
-  def hit(boards, board, coordinates)
-    pronoun = ''
-    boards[0] == board ? pronoun = 'You have hit AI' : pronoun = 'AI has hit you'
-    puts "#{pronoun} at #{coordinates[:row]}#{coordinates[:column]}!"
+  def hit(coordinates, user)
+    puts "#{user.as_subject} hit at #{coordinates[:row]}#{coordinates[:column]}..."
     sleep(1.0)
   end
 
-  def sunk_ship(ship, current_player)
-    puts "#{current_player} ship #{ship} has been sunk!"
+  def sunk_ship(ship)
+    puts "#{owner.as_possessive} ship #{ship} has been sunk!"
   end
 end

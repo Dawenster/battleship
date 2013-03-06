@@ -7,6 +7,14 @@ class User
     @coordinates = {}
   end
 
+  def as_possessive
+    'Your'
+  end
+
+  def as_subject
+    'You'
+  end
+
   def choose_coordinates
     @coordinates = {}
     enter_letter

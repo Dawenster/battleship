@@ -44,9 +44,9 @@ class Game
   def draw_attacks
     boards.each do |board|
       if board == user_board
-        boards.find {|b| b != board }.draw_attack(@user_attack_coords, boards, board)
+        boards.find {|b| b != board }.draw_attack(@user_attack_coords, user)
       else
-        boards.find {|b| b != board }.draw_attack(@ai_attack_coords, boards, board)
+        boards.find {|b| b != board }.draw_attack(@ai_attack_coords, ai)
       end
     end
   end

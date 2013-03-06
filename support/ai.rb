@@ -6,6 +6,14 @@ class AI
     @coordinates = {}
   end
 
+  def as_possessive
+    "AI's"
+  end
+
+  def as_subject
+    'AI'
+  end
+
   def choose_coordinates
     @coordinates = {}
     col = rand(COL_RANGE)
