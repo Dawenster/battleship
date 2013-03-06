@@ -1,6 +1,6 @@
-class Interface
-  ASTERIX_DIVIDER = '*' * 22
+ASTERIX_DIVIDER = '*' * 22
 
+module GameView
   def display_boards(boards)
     clear_screen
     move_to_home
@@ -40,7 +40,9 @@ class Interface
   def move_to_home
     print "\e[H"
   end
+end
 
+module UserView
   def enter_letter
     puts 'Enter a letter:'    
   end
@@ -61,6 +63,14 @@ class Interface
     puts "Please only put in one valid number between 1-10."
   end
 
+  def game_over(boards, board)
+    winning_message = ''
+    board == boards[0] ? winning_message = 'AI wins!' : winning_message = 'You win!'
+    puts "Game over! #{winning_message}"
+  end
+end
+
+module BoardView
   def miss(boards, board, coordinates)
     pronoun = ''
     boards[0] == board ? pronoun = 'You have' : pronoun = 'AI has'
@@ -77,11 +87,5 @@ class Interface
 
   def sunk_ship(ship, current_player)
     puts "#{current_player} ship #{ship} has been sunk!"
-  end
-
-  def game_over(boards, board)
-    winning_message = ''
-    board == boards[0] ? winning_message = 'AI wins!' : winning_message = 'You win!'
-    puts "Game over! #{winning_message}"
   end
 end

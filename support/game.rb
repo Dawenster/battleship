@@ -1,27 +1,30 @@
 class Game
-  attr_reader :interface, :ai, :user, :players, :boards
-  attr_accessor :user_board, :ai_board
+  include GameView
+  attr_reader :ai, :user, :user_board, :ai_board
 
-  def initialize(user_board, ai_board)
-    @interface = Interface.new
-    @ai = AI.new
-    @user = User.new
-    @players = [user, ai]
-    @user_board = user_board
-    @ai_board = ai_board
-    @boards = [user_board, ai_board]
+  def initialize(options = {})
+    @user_board, @ai_board = options[:user_board], options[:ai_board]
+    @user, @ai = options[:user], options[:ai]
     @user_attack_coords = {}
     @ai_attack_coords = {}
+  end
+
+  def players
+    [user, ai]
+  end
+
+  def boards
+    [user_board, ai_board]
   end
 
   def run
     user_board.place_all_the_ships
     ai_board.place_all_the_ships
-    interface.display_boards(boards)
+    display_boards(boards)
     until all_ships_sunk?
       take_turns
       draw_attacks
-      interface.display_boards(boards)
+      display_boards(boards)
       check_sunk_ships?
     end
   end
@@ -38,7 +41,7 @@ class Game
 
   def attack(player)
     if player == user
-      user.choose_coordinates(interface)
+      user.choose_coordinates
     else
       ai.choose_coordinates
     end
@@ -47,23 +50,23 @@ class Game
   def draw_attacks
     boards.each do |board|
       if board == user_board
-        boards.find {|b| b != board }.draw_attack(@user_attack_coords, interface, boards, board)
+        boards.find {|b| b != board }.draw_attack(@user_attack_coords, boards, board)
       else
-        boards.find {|b| b != board }.draw_attack(@ai_attack_coords, interface, boards, board)
+        boards.find {|b| b != board }.draw_attack(@ai_attack_coords, boards, board)
       end
     end
   end
 
   def check_sunk_ships?
     boards.each do |board|
-      board.check_sunk_ship(interface, boards, board)
+      board.check_sunk_ship(boards, board)
     end
   end
 
   def all_ships_sunk?
     boards.each do |board|
       if board.all_sunk?(board)
-        interface.game_over(boards, board)
+        game_over(boards, board)
         exit
       end
     end

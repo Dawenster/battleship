@@ -4,6 +4,7 @@ SHIPS = [1,2,3,4,5]
 DIRECTIONS = [:row, :column]
 
 class Board
+  include BoardView
   attr_reader :playing_field, :ships_sunk
 
   def initialize
@@ -63,13 +64,13 @@ class Board
     playing_field[coordinates[:row]][coordinates[:column] - 1] = value
   end
 
-  def draw_attack(coordinates, interface, boards, board)
+  def draw_attack(coordinates, boards, board)
     if playing_field[coordinates[:row]][coordinates[:column]] == '.'
       playing_field[coordinates[:row]][coordinates[:column]] = 'O'
-      interface.miss(boards, board, coordinates)
+      miss(boards, board, coordinates)
     else
       playing_field[coordinates[:row]][coordinates[:column]] = 'X'
-      interface.hit(boards, board, coordinates)
+      hit(boards, board, coordinates)
     end
   end
 
@@ -79,13 +80,13 @@ class Board
     {row: row, column: col}
   end
 
-  def check_sunk_ship(interface, boards, board)
+  def check_sunk_ship(boards, board)
     current_player = ''
     boards[0] == board ? current_player = 'Your' : current_player = "AI\'s"
     SHIPS.each do |ship|
       unless playing_field_values.include?(ship)
         ships_sunk << ship
-        interface.sunk_ship(ship, current_player) if ships_sunk.count(ship) == 1
+        sunk_ship(ship, current_player) if ships_sunk.count(ship) == 1
       end
     end
   end
