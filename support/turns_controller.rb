@@ -14,6 +14,10 @@ class TurnsController
     @attack_coords = {}
   end
 
+  def boards
+    game.boards
+  end
+
   def run
     game.display_boards
     until all_ships_sunk?
@@ -25,7 +29,7 @@ class TurnsController
   end
 
   def check_for_sunk_ships
-    game.boards.each do |board|
+    boards.each do |board|
       board.check_sunk_ship
     end
   end
@@ -39,10 +43,6 @@ class TurnsController
     end
   end
 
-  def method_missing(*args)
-    game.send(*args)
-  end
-
   def take_turns
     game.players.each do |player|
       @attack_coords[player] = player.choose_coordinates
@@ -50,11 +50,11 @@ class TurnsController
   end
 
   def other_board(not_board)
-    game.boards.find {|b| b != not_board }
+    boards.find {|b| b != not_board }
   end
 
   def draw_attacks
-    game.boards.each do |board|
+    boards.each do |board|
       player = board.owner
       coordinates = @attack_coords[board.owner]
       result = other_board(board).draw_attack(coordinates)
