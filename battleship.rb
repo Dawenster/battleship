@@ -8,10 +8,4 @@ require_relative 'support/turns_controller'
 class CannotBeDrawn < StandardError
 end
 
-user_board = Board.new
-ai_board = Board.new
-ai = AI.new
-user = User.new
-game = Game.new(user_board: user_board, ai_board: ai_board, ai: ai, user: user)
-turns_controller = TurnsController.new(game: game)
-turns_controller.run
+TurnsController.new.run

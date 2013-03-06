@@ -1,12 +1,13 @@
 class TurnsController
   attr_reader :game
+
   def initialize(options = {})
-    @game = options[:game]
+    @game = Game.new(user_board: Board.new, ai_board: Board.new, ai: AI.new, user: User.new)
   end
 
   def run
-    user_board.place_all_the_ships
-    ai_board.place_all_the_ships
+    game.user_board.place_all_the_ships
+    game.ai_board.place_all_the_ships
     display_boards(boards)
     until all_ships_sunk?
       take_turns
