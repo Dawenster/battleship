@@ -10,8 +10,7 @@ class TurnsController
       ai: ai, 
       user: user
     )
-    @user_attack_coords = {}
-    @ai_attack_coords = {}
+    @attack_coords = {}
   end
 
   def run
@@ -30,21 +29,18 @@ class TurnsController
 
   def take_turns
     game.players.each do |player|
-      if player.user?
-        @user_attack_coords = player.choose_coordinates
-      else
-        @ai_attack_coords = player.choose_coordinates
-      end
+      @attack_coords[player] = player.choose_coordinates
     end
+  end
+
+  def other_board(not_board)
+    game.boards.find {|b| b != not_board }
   end
 
   def draw_attacks
     game.boards.each do |board|
-      if board.owner.user?
-        game.boards.find {|b| b != board }.draw_attack(@user_attack_coords, user)
-      else
-        game.boards.find {|b| b != board }.draw_attack(@ai_attack_coords, ai)
-      end
+      coordinates = @attack_coords[board.owner]
+      other_board(board).draw_attack(coordinates, board.owner)
     end
   end
 end
