@@ -20,9 +20,16 @@ class TurnsController
       take_turns
       draw_attacks
       game.display_boards
-      check_sunk_ships?
+      check_for_sunk_ships
     end
   end
+
+  def check_for_sunk_ships
+    game.boards.each do |board|
+      board.check_sunk_ship
+    end
+  end
+
 
   def method_missing(*args)
     game.send(*args)

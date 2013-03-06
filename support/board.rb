@@ -91,9 +91,7 @@ class Board
     {row: row, column: col}
   end
 
-  def check_sunk_ship(boards, board)
-    current_player = ''
-    boards[0] == board ? current_player = 'Your' : current_player = "AI\'s"
+  def check_sunk_ship
     SHIPS.each do |ship|
       unless playing_field_values.include?(ship)
         ships_sunk << ship

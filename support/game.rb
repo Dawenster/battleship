@@ -21,12 +21,6 @@ class Game
     [user_board, ai_board]
   end
 
-  def check_sunk_ships?
-    boards.each do |board|
-      board.check_sunk_ship(boards, board)
-    end
-  end
-
   def all_ships_sunk?
     boards.each do |board|
       if board.all_sunk?(board)
