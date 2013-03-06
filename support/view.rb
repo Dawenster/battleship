@@ -17,6 +17,10 @@ module GameView
   def move_to_home
     print "\e[H"
   end
+
+  def game_over(owner)
+    puts "Game over! #{owner.as_subject} win!"
+  end
 end
 
 module UserView
@@ -40,9 +44,6 @@ module UserView
     puts "Please only put in one valid number between 1-10."
   end
 
-  def game_over(boards, board)
-    puts "Game over! #{board.owner_name_subject} win!"
-  end
 end
 
 module BoardView

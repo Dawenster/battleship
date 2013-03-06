@@ -21,13 +21,4 @@ class Game
     [user_board, ai_board]
   end
 
-  def all_ships_sunk?
-    boards.each do |board|
-      if board.all_sunk?(board)
-        game_over(boards, board)
-        exit
-      end
-    end
-    false
-  end
 end

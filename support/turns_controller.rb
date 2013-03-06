@@ -30,6 +30,14 @@ class TurnsController
     end
   end
 
+  def all_ships_sunk?
+    if all_sunk_board = boards.find { |board| board.all_sunk? }
+      game.game_over(other_board(all_sunk_board).owner)
+      true
+    else
+      false
+    end
+  end
 
   def method_missing(*args)
     game.send(*args)

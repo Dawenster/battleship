@@ -100,8 +100,8 @@ class Board
     end
   end
 
-  def all_sunk?(board)
-    board.ships_sunk.uniq.length == 5
+  def all_sunk?
+    ships_sunk.uniq.length == 5
   end
 end
 
